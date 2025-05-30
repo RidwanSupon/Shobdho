@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "367445644974",
+    "project_id": "shobdhoapp",
+    "storage_bucket": "shobdhoapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:367445644974:android:883dbb038691942113bf3f",
+        "android_client_info": {
+          "package_name": "Shobdho.com"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA14be122XLPlUw0TrplbHwPlG8Vmi_mAs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:367445644974:android:0981f34496ce3b1e13bf3f",
+        "android_client_info": {
+          "package_name": "com.example.shobdhoapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA14be122XLPlUw0TrplbHwPlG8Vmi_mAs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:367445644974:android:42c22eb0d7b8276813bf3f",
+        "android_client_info": {
+          "package_name": "com.example.tourapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA14be122XLPlUw0TrplbHwPlG8Vmi_mAs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
