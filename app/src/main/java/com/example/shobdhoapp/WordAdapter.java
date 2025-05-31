@@ -9,13 +9,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder> {
 
-    private List<Word> wordList;
-    private boolean isAdmin;
-    private OnWordActionListener listener;
+    private List<Word> wordList;     // Filtered/displayed list
+    private final List<Word> fullList; // Complete list for filtering
+    private final boolean isAdmin;
+    private final OnWordActionListener listener;
 
     public interface OnWordActionListener {
         void onEditWord(Word word);
@@ -23,7 +25,8 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder
     }
 
     public WordAdapter(List<Word> wordList, boolean isAdmin, OnWordActionListener listener) {
-        this.wordList = wordList;
+        this.wordList = new ArrayList<>(wordList);
+        this.fullList = new ArrayList<>(wordList);
         this.isAdmin = isAdmin;
         this.listener = listener;
     }
@@ -57,6 +60,42 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder
     @Override
     public int getItemCount() {
         return wordList.size();
+    }
+
+    /**
+     * Filters the word list based on the query.
+     * @param query the search keyword
+     */
+    public void filter(String query) {
+        wordList.clear();
+        if (query == null || query.isEmpty()) {
+            wordList.addAll(fullList);
+        } else {
+            String lowerQuery = query.toLowerCase();
+            for (Word word : fullList) {
+                if (word.getWord().toLowerCase().contains(lowerQuery) ||
+                        word.getMeaning().toLowerCase().contains(lowerQuery) ||
+                        word.getSynonym().toLowerCase().contains(lowerQuery)) {
+                    wordList.add(word);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    /**
+     * Update the full list of words from Firebase and refresh the adapter.
+     * @param newWords the list of updated words
+     */
+    public void updateFullList(List<Word> newWords) {
+        fullList.clear();
+        fullList.addAll(newWords);
+
+        // Reset the filtered list to show all words initially
+        wordList.clear();
+        wordList.addAll(newWords);
+
+        notifyDataSetChanged();
     }
 
     static class WordViewHolder extends RecyclerView.ViewHolder {

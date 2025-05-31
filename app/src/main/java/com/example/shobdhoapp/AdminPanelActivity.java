@@ -2,6 +2,8 @@ package com.example.shobdhoapp;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +26,7 @@ public class AdminPanelActivity extends AppCompatActivity implements WordAdapter
 
     private FloatingActionButton fabAdd;
     private RecyclerView recyclerView;
+    private EditText searchBar;
     private WordAdapter adapter;
     private final List<Word> wordList = new ArrayList<>();
     private DatabaseReference wordRef;
@@ -35,6 +38,7 @@ public class AdminPanelActivity extends AppCompatActivity implements WordAdapter
 
         fabAdd = findViewById(R.id.addWordBtn);
         recyclerView = findViewById(R.id.recyclerView);
+        searchBar = findViewById(R.id.searchBar);
 
         wordRef = FirebaseDatabase.getInstance().getReference("words");
 
@@ -44,6 +48,19 @@ public class AdminPanelActivity extends AppCompatActivity implements WordAdapter
 
         fabAdd.setOnClickListener(v -> showAddOrEditWordDialog(null));
 
+        searchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                adapter.filter(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
         loadWordsFromFirebase();
     }
 
@@ -51,15 +68,15 @@ public class AdminPanelActivity extends AppCompatActivity implements WordAdapter
         wordRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                wordList.clear();
+                List<Word> updatedWords = new ArrayList<>();
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     Word word = ds.getValue(Word.class);
                     if (word != null) {
                         word.setKey(ds.getKey());
-                        wordList.add(word);
+                        updatedWords.add(word);
                     }
                 }
-                adapter.notifyDataSetChanged();
+                adapter.updateFullList(updatedWords);
             }
 
             @Override
@@ -101,7 +118,6 @@ public class AdminPanelActivity extends AppCompatActivity implements WordAdapter
             Word newWord = new Word(wordStr, meaningStr, synonymStr);
 
             if (existingWord == null || existingWord.getKey() == null) {
-                // Add new word
                 wordRef.push().setValue(newWord)
                         .addOnSuccessListener(aVoid -> {
                             Toast.makeText(this, "Word added", Toast.LENGTH_SHORT).show();
@@ -110,7 +126,6 @@ public class AdminPanelActivity extends AppCompatActivity implements WordAdapter
                         .addOnFailureListener(e ->
                                 Toast.makeText(this, "Failed to add word: " + e.getMessage(), Toast.LENGTH_SHORT).show());
             } else {
-                // Update existing word
                 wordRef.child(existingWord.getKey()).setValue(newWord)
                         .addOnSuccessListener(aVoid -> {
                             Toast.makeText(this, "Word updated", Toast.LENGTH_SHORT).show();

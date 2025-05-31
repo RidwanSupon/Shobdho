@@ -5,13 +5,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- RecyclerView filling available space -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:padding="8dp"
+    <!-- Vertical container for SearchBar + RecyclerView -->
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="64dp"/>
+        android:layout_height="match_parent">
+
+        <!-- Search Bar on top -->
+        <EditText
+            android:id="@+id/searchBar"
+            android:hint="Search word..."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@android:drawable/ic_menu_search"
+            android:padding="10dp"
+            android:background="@android:drawable/editbox_background_normal"
+            android:layout_margin="8dp" />
+
+        <!-- RecyclerView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="8dp"
+            android:layout_marginBottom="64dp"/>
+    </LinearLayout>
 
     <!-- Floating Action Button (bottom end) -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -20,11 +39,10 @@
         android:src="@android:drawable/ic_input_add"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:visibility="visible"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
-    <!-- Logout Button pinned to bottom center -->
+    <!-- Logout Button (bottom center) -->
     <Button
         android:id="@+id/btnLogout"
         android:layout_width="wrap_content"

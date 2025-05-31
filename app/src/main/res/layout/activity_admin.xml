@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Logout Button at the top-right -->
+    <!-- Logout Button at top-right -->
     <Button
         android:id="@+id/btnLogout"
         android:text="Logout"
@@ -12,20 +12,32 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_margin="8dp" />
+        android:layout_marginStart="8dp" />
 
-    <!-- RecyclerView fills space below logout and above FAB -->
+    <!-- Search Bar aligned to the left of logout -->
+    <EditText
+        android:id="@+id/searchBar"
+        android:hint="Search word..."
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@android:drawable/ic_menu_search"
+        android:padding="10dp"
+        android:background="@android:drawable/editbox_background_normal"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@id/btnLogout"
+        android:layout_marginEnd="8dp" />
+
+    <!-- RecyclerView below the search and logout -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_below="@id/btnLogout"
+        android:layout_below="@id/searchBar"
         android:layout_above="@id/addWordBtn"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="8dp" />
 
-
-    <!-- Floating Action Button -->
+    <!-- Add Word Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addWordBtn"
         android:layout_width="wrap_content"
@@ -35,4 +47,6 @@
         android:layout_margin="16dp"
         android:contentDescription="Add Word"
         android:src="@android:drawable/ic_input_add" />
+
+    <!-- Logout Button (also remains at top-right, not repeated here) -->
 </RelativeLayout>
