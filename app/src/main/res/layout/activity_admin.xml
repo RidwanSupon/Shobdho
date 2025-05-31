@@ -1,52 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="16dp"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#0D1B2A">
 
-    <!-- Logout Button at top-right -->
-    <Button
-        android:id="@+id/btnLogout"
-        android:text="Logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="8dp" />
-
-    <!-- Search Bar aligned to the left of logout -->
-    <EditText
-        android:id="@+id/searchBar"
-        android:hint="Search word..."
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableStart="@android:drawable/ic_menu_search"
-        android:padding="10dp"
-        android:background="@android:drawable/editbox_background_normal"
-        android:layout_alignParentTop="true"
-        android:layout_toStartOf="@id/btnLogout"
-        android:layout_marginEnd="8dp" />
-
-    <!-- RecyclerView below the search and logout -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_below="@id/searchBar"
-        android:layout_above="@id/addWordBtn"
+    <!-- Vertical container: SearchBar + Logout + RecyclerView -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp" />
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <!-- Add Word Button -->
+        <!-- Horizontal container for SearchBar and Logout -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="24dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:hint="Search word"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxBackgroundColor="@android:color/white"
+                app:boxStrokeColor="@color/cardview_dark_background"
+                app:boxCornerRadiusTopStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusBottomEnd="8dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/searchBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@android:drawable/ic_menu_search"
+                    android:padding="10dp"
+                    android:inputType="text"
+                    android:textColor="@android:color/white"
+                    android:background="@android:color/transparent" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btnLogout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Logout"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@color/cardview_dark_background" />
+        </LinearLayout>
+
+        <!-- RecyclerView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#0D1B2A"
+            android:padding="0dp" />
+    </LinearLayout>
+
+    <!-- Floating Action Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addWordBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="16dp"
+        android:src="@android:drawable/ic_input_add"
         android:contentDescription="Add Word"
-        android:src="@android:drawable/ic_input_add" />
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp" />
 
-    <!-- Logout Button (also remains at top-right, not repeated here) -->
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

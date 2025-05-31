@@ -3,33 +3,56 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#0D1B2A">
 
     <!-- Vertical container for SearchBar + RecyclerView -->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="32dp">
 
-        <!-- Search Bar on top -->
-        <EditText
-            android:id="@+id/searchBar"
-            android:hint="Search word..."
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@android:drawable/ic_menu_search"
-            android:padding="10dp"
-            android:background="@android:drawable/editbox_background_normal"
-            android:layout_margin="8dp" />
+        <!-- Horizontal container for SearchBar and Logout button -->
 
         <!-- RecyclerView -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <EditText
+                android:id="@+id/searchBar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="1"
+            android:background="@android:drawable/editbox_background_normal"
+            android:drawableStart="@android:drawable/ic_menu_search"
+            android:hint="Search word..."
+            android:padding="10dp" />
+
+            <Button
+                android:id="@+id/btnLogout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:backgroundTint="@color/cardview_dark_background"
+            android:text="Logout"
+            android:textColor="@android:color/white" />
+        </LinearLayout>
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="638dp"
+            android:layout_marginBottom="32dp"
             android:layout_weight="1"
-            android:padding="8dp"
-            android:layout_marginBottom="64dp"/>
+            android:padding="8dp" />
     </LinearLayout>
 
     <!-- Floating Action Button (bottom end) -->
@@ -41,16 +64,5 @@
         android:layout_margin="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-
-    <!-- Logout Button (bottom center) -->
-    <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Logout"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@android:color/holo_red_light"
-        android:textColor="@android:color/white" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

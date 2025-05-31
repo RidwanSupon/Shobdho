@@ -2,6 +2,8 @@ package com.example.shobdhoapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Toast;
 
@@ -65,6 +67,22 @@ public class MainActivity extends AppCompatActivity {
             finish();
         });
 
+        // Add TextWatcher for search bar to filter list
+        binding.searchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { /* no-op */ }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (wordAdapter != null) {
+                    wordAdapter.filter(s.toString());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) { /* no-op */ }
+        });
+
         checkUserRoleAndSetupUI();
         loadWords();
     }
@@ -88,24 +106,28 @@ public class MainActivity extends AppCompatActivity {
                     binding.fabAdd.setVisibility(View.GONE);
                 }
 
-                // Update adapter with proper listener for admin or user
+                // Setup adapter with listener depending on role
                 WordAdapter.OnWordActionListener listener = null;
                 if (isAdmin) {
                     listener = new WordAdapter.OnWordActionListener() {
                         @Override
                         public void onEditWord(Word word) {
-                            // Admin can edit words, implement if needed
+                            // Implement edit functionality if needed
                         }
 
                         @Override
                         public void onDeleteWord(Word word) {
-                            // Admin can delete words, implement if needed
+                            // Implement delete functionality if needed
                         }
                     };
                 }
 
+                // Create new adapter with updated role and listener
                 wordAdapter = new WordAdapter(wordList, isAdmin, listener);
                 binding.recyclerView.setAdapter(wordAdapter);
+
+                // Apply current search filter after adapter reset
+                wordAdapter.filter(binding.searchBar.getText().toString());
             }
 
             @Override
@@ -127,7 +149,12 @@ public class MainActivity extends AppCompatActivity {
                         wordList.add(word);
                     }
                 }
-                wordAdapter.notifyDataSetChanged();
+
+                if (wordAdapter != null) {
+                    // Update adapter's original list and apply current filter
+                    wordAdapter.updateFullList(wordList);
+                    wordAdapter.filter(binding.searchBar.getText().toString());
+                }
             }
 
             @Override
